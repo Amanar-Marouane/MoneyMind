@@ -18,6 +18,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->enum('role', ['Admin', 'Client'])->default('Client');
+            $table->integer('credit_date')->nullable();
+            $table->integer('salary')->nullable();
+            $table->integer('saving_goal')->nullable();
             $table->timestamps();
         });
 
