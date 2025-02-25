@@ -25,6 +25,9 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'salary' => ['required', 'integer', 'min:0'],
+            'credit_date' => ['required', 'integer', 'min:1', 'max:31'],
+            'saving_goal' => ['nullable', 'integer', 'min:0'],
         ];
     }
 }
