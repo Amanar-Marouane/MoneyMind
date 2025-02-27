@@ -47,4 +47,17 @@ class ExpenseController extends Controller
 
         return redirect(route("dashboard"))->with("success", "Expense counted successfully");
     }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->id;
+        $expense = Expense::find($id);
+        if (!$expense) {
+            return redirect()->back()->with('error', 'Expense not found.');
+        }
+
+        $expense->delete();
+
+        return redirect()->back()->with('success', 'Recurring Expense Has Been Deleted');
+    }
 }

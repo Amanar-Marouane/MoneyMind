@@ -66,6 +66,12 @@
             </header>
         @endisset
 
+        <div class="mb-4 text-white rounded-lg bg-green-500 border-l-4 border-green-700 shadow-md">
+            <p>{{ session('success') ?? '' }}</p>
+        </div>
+        <div class="mb-4 text-white rounded-lg bg-red-500 border-l-4 border-red-700 shadow-md">
+            <p>{{ session('error') ?? '' }}</p>
+        </div>
         <!-- Page Content -->
         <main>
             {{ $slot }}
