@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('credit_date')->nullable();
             $table->integer('salary')->nullable();
             $table->integer('saving_goal')->nullable();
+            $table->integer('saving_goal_progress')->default(0);
             $table->timestamps();
         });
 

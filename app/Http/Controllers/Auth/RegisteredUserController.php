@@ -36,6 +36,7 @@ class RegisteredUserController extends Controller
             'salary' => ['required', 'integer', 'min:0'],
             'credit_date' => ['required', 'integer', 'min:1', 'max:31'],
             'saving_goal' => ['nullable', 'integer', 'min:0'],
+            'budget' => ['required', 'integer', 'min:0'],
         ]);
 
         $user = User::create([
@@ -45,6 +46,7 @@ class RegisteredUserController extends Controller
             'salary' => $request->salary,
             'credit_date' => $request->credit_date,
             'saving_goal' => $request->saving_goal,
+            'budget' => $request->budget,
         ]);
         event(new Registered($user));
 

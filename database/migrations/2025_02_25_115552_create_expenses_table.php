@@ -24,9 +24,9 @@ return new class extends Migration
                 ->references("id")
                 ->on("categories")
                 ->onDelete(null);
-            $table->enum("type", ["cash", "percentage"]);
             $table->integer("cost");
-            $table->integer("frequency")->default(null);
+            $table->boolean("monthly")->default(false);
+            $table->date("starting_date")->default(null);
             $table->timestamps();
         });
     }

@@ -24,9 +24,15 @@
 
                         @unless (Auth::user()->role == 'Admin')
                             <div>
+                                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Current Budget') }}
+                                </p>
+                                <p class="mt-1">{{ number_format(Auth::user()->budget, 2) }} DH</p>
+                            </div>
+
+                            <div>
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Monthly Salary') }}
                                 </p>
-                                <p class="mt-1">${{ number_format(Auth::user()->salary, 2) }}</p>
+                                <p class="mt-1">{{ number_format(Auth::user()->salary, 2) }} DH</p>
                             </div>
 
                             <div>

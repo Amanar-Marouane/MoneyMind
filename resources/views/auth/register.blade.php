@@ -23,7 +23,7 @@
             <x-input-label for="password" :value="__('Password')" />
 
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="new-password" />
+                autocomplete="new-password" :value="old('password')" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -33,15 +33,24 @@
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                name="password_confirmation" required autocomplete="new-password" />
+                name="password_confirmation" required autocomplete="new-password" :value="old('password_confirmation')" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <!-- Salary -->
         <div class="mt-4">
+            <x-input-label for="budget" :value="__('Enter Your Current Budget  DH')" />
+            <x-text-input id="budget" class="block mt-1 w-full" type="number" name="budget" required
+                :value="old('budget')" />
+            <x-input-error :messages="$errors->get('budget')" class="mt-2" />
+        </div>
+
+        <!-- Salary -->
+        <div class="mt-4">
             <x-input-label for="salary" :value="__('Enter Your Salary  DH')" />
-            <x-text-input id="salary" class="block mt-1 w-full" type="number" name="salary" required />
+            <x-text-input id="salary" class="block mt-1 w-full" type="number" name="salary" required
+                :value="old('salary')" />
             <x-input-error :messages="$errors->get('salary')" class="mt-2" />
         </div>
 
@@ -49,14 +58,15 @@
         <div class="mt-4">
             <x-input-label for="credit_date" :value="__('Enter the Day Your Salary Was Credited')" />
             <x-text-input id="credit_date" class="block mt-1 w-full" type="number" name="credit_date" min="1"
-                max="31" required placeholder="1-31" />
+                max="31" required placeholder="1-31" :value="old('credit_date')" />
             <x-input-error :messages="$errors->get('credit_date')" class="mt-2" />
         </div>
 
         <!-- Saving Goal -->
         <div class="mt-4">
             <x-input-label for="saving_goal" :value="__('Enter Your Saving Goal (Optional) DH')" />
-            <x-text-input id="saving_goal" class="block mt-1 w-full" type="number" name="saving_goal" />
+            <x-text-input id="saving_goal" class="block mt-1 w-full" type="number" name="saving_goal"
+                :value="old('saving_goal')" />
             <x-input-error :messages="$errors->get('saving_goal')" class="mt-2" />
         </div>
 
