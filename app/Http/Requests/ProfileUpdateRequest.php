@@ -28,7 +28,6 @@ class ProfileUpdateRequest extends FormRequest
             'salary' => ['required', 'integer', 'min:0'],
             'credit_date' => ['required', 'integer', 'min:1', 'max:31'],
             'saving_goal' => ['nullable', 'integer', 'min:0'],
-            'budget' => ['required', 'integer', 'min:0'],
         ];
     }
 }

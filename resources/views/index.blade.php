@@ -38,11 +38,13 @@
                                 </span>
                             </div>
                             <div class="bg-gray-200 dark:bg-gray-700 rounded-full h-4 mb-2">
-                                <div class="bg-green-500 h-4 rounded-full" style="width: 75%"></div>
+                                <div class="bg-green-500 h-4 rounded-full"
+                                    style="width: {{ ($user->saving_goal_progress / $user->saving_goal) * 100 > 100 ? 100 : ($user->saving_goal_progress / $user->saving_goal) * 100 }}%">
+                                </div>
                             </div>
                             <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                                <span>225 DH saved</span>
-                                <span>75% of goal</span>
+                                <span>{{ $user->saving_goal_progress }} DH saved</span>
+                                <span>{{ ($user->saving_goal_progress / $user->saving_goal) * 100 }}% of goal</span>
                             </div>
                         </div>
                     @endif
@@ -61,25 +63,6 @@
                             Based on your current saving patterns, you could reach your "New Laptop" goal 2 months
                             earlier by reducing your dining expenses by just 10%. Would you like to set up a
                             notification for when your dining expenses exceed your monthly limit?
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-lg p-4">
-                        <div class="flex items-center">
-                            <div class="mr-4">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-10 w-10 text-indigo-600 dark:text-indigo-400" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-md font-medium text-indigo-800 dark:text-indigo-300">Savings Streak</h4>
-                                <p class="text-sm text-indigo-600 dark:text-indigo-400">You've hit your savings goal for
-                                    3 months in a row!</p>
-                            </div>
                         </div>
                     </div>
                 </div>
