@@ -21,7 +21,8 @@ Route::middleware(Client::class)->group(function () {
 
 Route::middleware(Admin::class)->group(function () {
     Route::get('/admin/dashboard', [UserController::class, "adminIndex"])->middleware(['auth', 'verified'])->name('admin.dashboard');
-    Route::view('/admin/users', 'admin.users')->name('admin.users');
+    Route::get('/admin/users', [UserController::class, 'adminUsers'])->name('admin.users');
+    Route::delete('/admin/users', [UserController::class, 'adminUsersDestroy'])->name('admin.users.delete');
     Route::view('/admin/categories', 'admin.categories')->name('admin.categories');
 });
 

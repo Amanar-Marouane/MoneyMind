@@ -70,4 +70,22 @@ class UserController extends Controller
             'categoryNames' => $categoryNames,
         ]);
     }
+
+    public function adminUsers()
+    {
+        $inactif_accounts = User::where(DB::raw('DATEDIFF(CURRENT_TIMESTAMP, loged_in_at)'), '>=', 60)->get();
+        return view('admin.users', [
+            'inactif_accounts' => $inactif_accounts,
+        ]);
+    }
+
+    public function adminUsersDestroy(Request $request)
+    {
+        $account = User::find($request->id);
+        if (!$account) {
+            return redirect()->back()->with('error', 'Account Not Found');
+        }
+        $account->delete();
+        return redirect()->back()->with('success', 'Account Has Been Deleted');
+    }
 }
