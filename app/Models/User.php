@@ -87,7 +87,13 @@ class User extends Authenticatable
             ->groupBy('expenses.category_id');
     }
 
-    public function wishes(){
+    public function wishes()
+    {
         return $this->hasMany(Wish::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role == $role;
     }
 }

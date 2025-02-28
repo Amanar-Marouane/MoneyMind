@@ -94,7 +94,7 @@
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-lg font-medium">Your Wishlist Items</h3>
                         </div>
-                        @if ($wishes)
+                        @if (!empty($wishes))
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 @foreach ($wishes as $wish)
                                     <div

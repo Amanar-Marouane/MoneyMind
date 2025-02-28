@@ -9,6 +9,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command(CheckMonthlySalary::class)->daily();
 Schedule::command(SetSavingGoalProgress::class)->daily();
+Schedule::command(CheckMonthlySalary::class)->daily();
 Schedule::command(CheckRecExpenses::class)->daily();

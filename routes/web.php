@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\{ProfileController, UserController, ExpenseController, WishController};
+use App\Http\Middleware\{Admin, Client};
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
+Route::middleware(Client::class)->group(function () {
     Route::get('/dashboard', [UserController::class, "index"])->middleware(['auth', 'verified'])->name('dashboard');
     Route::view('/profile', "profile.index")->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -16,6 +17,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/wish', [WishController::class, 'store'])->name('wish.store');
     Route::delete('/wish', [WishController::class, 'destroy'])->name('wish.destroy');
     Route::put('/wish', [WishController::class, 'update'])->name('wish.update');
+});
+
+Route::middleware(Admin::class)->group(function () {
+    Route::get('/admin/dashboard', [UserController::class, "adminIndex"])->middleware(['auth', 'verified'])->name('admin.dashboard');
+    Route::view('/admin/users', 'admin.users')->name('admin.users');
+    Route::view('/admin/categories', 'admin.categories')->name('admin.categories');
 });
 
 require __DIR__ . '/auth.php';
