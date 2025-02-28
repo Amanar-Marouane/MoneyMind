@@ -13,6 +13,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/expense/add', [ExpenseController::class, "add"])->name('expense.insert');
     Route::delete('/expense', [ExpenseController::class, 'destroy'])->name('expense.delete');
     Route::get('/wishes', [WishController::class, 'index'])->name('wish-list');
+    Route::post('/wish', [WishController::class, 'store'])->name('wish.store');
+    Route::delete('/wish', [WishController::class, 'destroy'])->name('wish.destroy');
+    Route::put('/wish', [WishController::class, 'update'])->name('wish.update');
 });
 
 require __DIR__ . '/auth.php';
