@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ProfileController, UserController, ExpenseController};
+use App\Http\Controllers\{ProfileController, UserController, ExpenseController, WishController};
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -12,6 +12,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/expense/add', [ExpenseController::class, "addView"])->name('expense.add');
     Route::post('/expense/add', [ExpenseController::class, "add"])->name('expense.insert');
     Route::delete('/expense', [ExpenseController::class, 'destroy'])->name('expense.delete');
+    Route::get('/wishes', [WishController::class, 'index'])->name('wish-list');
 });
 
 require __DIR__ . '/auth.php';

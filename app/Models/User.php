@@ -87,7 +87,7 @@ class User extends Authenticatable
             ->groupBy('expenses.category_id');
     }
 
-    public function saving_progress(){
-        
+    public function wishes(){
+        return $this->hasMany(Wish::class);
     }
 }

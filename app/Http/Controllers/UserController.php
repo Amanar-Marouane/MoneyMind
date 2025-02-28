@@ -27,7 +27,7 @@ class UserController extends Controller
         $expenses = $user->expenses;
         $recExpenses = $user->recExpenses;
         
-        return view("index", [
+        return view("client.index", [
             'user' => $user,
             'daysLeft' => $daysLeft,
             'categories' => $categories,
