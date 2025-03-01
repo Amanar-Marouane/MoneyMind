@@ -20,7 +20,7 @@ class CheckMonthlySalary extends Command
                 $currentDay = Carbon::now()->day;
                 $currentMonth = Carbon::now()->month;
 
-                if ($user->credit_date == $currentDay || ($user->credit_date == 28 && $currentMonth == 2)) {
+                if ($user->credit_date == $currentDay || ($currentDay == 28 && $currentMonth == 2)) {
                     $user->budget += $user->salary;
                     $user->save();
 

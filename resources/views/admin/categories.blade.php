@@ -11,7 +11,7 @@
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Add New Category</h3>
 
-                    <form action="#" method="POST" class="space-y-4">
+                    <form action="{{ route('category.store') }}" method="POST" class="space-y-4">
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -21,6 +21,7 @@
                                 <input type="text" name="name" id="name"
                                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                                     placeholder="e.g. Food & Groceries" required>
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
 
                             <div class="flex items-end">
@@ -40,7 +41,6 @@
                 </div>
             </div>
 
-            <!-- Categories List Section -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">All Categories</h3>
@@ -64,40 +64,49 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-8 w-8 rounded-full"
-                                                style="background-color: #3B82F6"></div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Food &
-                                                    Groceries</div>
+                                @foreach ($categories as $category)
+                                    @php
+                                        $randomColor = '#' . dechex(rand(0x000000, 0xffffff));
+                                    @endphp
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-8 w-8 rounded-full"
+                                                    style="background-color: {{ $randomColor }}"></div>
+                                                <div class="ml-4">
+                                                    <div
+                                                        class="text-sm font-medium text-gray-900 dark:text-gray-100 category-name">
+                                                        {{ $category->name }}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500 dark:text-gray-400">187</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-500 dark:text-gray-400">12,450 DH</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button data-category-id="1" data-category-name="Food & Groceries"
-                                            data-category-color="#3B82F6"
-                                            class="edit-category-btn text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
-                                            Edit
-                                        </button>
-                                        <form action="#" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" name="category_id" value="1">
-                                            <button type="submit"
-                                                class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
-                                                Delete
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                                                {{ count($category->expenses) }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                                                {{ $category->expensesSum() }} DH</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <button data-category-id="{{ $category->id }}"
+                                                data-category-name="{{ $category->name }}"
+                                                class="edit-category-btn text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
+                                                Edit
                                             </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                            <form action="{{ route('category.destroy') }}" method="POST"
+                                                class="inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="id" value="{{ $category->id }}">
+                                                <button type="submit"
+                                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -120,10 +129,10 @@
             </button>
         </div>
 
-        <form action="#" method="POST">
+        <form action="{{ route('category.update') }}" method="POST">
             @csrf
             @method('PUT')
-            <input type="hidden" name="category_id" id="editCategoryId">
+            <input type="hidden" name="id" id="editCategoryId">
 
             <div class="mb-4">
                 <label for="editCategoryName"
@@ -146,24 +155,6 @@
     </div>
 </div>
 
-<div id="deleteConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-auto">
-        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Confirm Deletion</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-6">Are you sure you want to delete this category? All associated
-            expenses will be categorized as "Uncategorized". This action cannot be undone.</p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancelDelete"
-                class="px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">
-                Cancel
-            </button>
-            <button id="confirmDelete"
-                class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                Delete Category
-            </button>
-        </div>
-    </div>
-</div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('.edit-category-btn');
@@ -172,12 +163,6 @@
         const cancelEditBtn = document.getElementById('cancelEditCategory');
         const editCategoryIdInput = document.getElementById('editCategoryId');
         const editCategoryNameInput = document.getElementById('editCategoryName');
-        const editCategoryColorInput = document.getElementById('editCategoryColor');
-
-        const deleteModal = document.getElementById('deleteConfirmModal');
-        const cancelDeleteBtn = document.getElementById('cancelDelete');
-        const confirmDeleteBtn = document.getElementById('confirmDelete');
-        let currentDeleteForm = null;
 
         editButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -202,34 +187,6 @@
         editModal.addEventListener('click', function(e) {
             if (e.target === editModal) {
                 editModal.classList.add('hidden');
-            }
-        });
-
-        const deleteForms = document.querySelectorAll('form[method="POST"][action="#"]');
-        deleteForms.forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                currentDeleteForm = this;
-                deleteModal.classList.remove('hidden');
-            });
-        });
-
-        cancelDeleteBtn.addEventListener('click', function() {
-            deleteModal.classList.add('hidden');
-            currentDeleteForm = null;
-        });
-
-        confirmDeleteBtn.addEventListener('click', function() {
-            if (currentDeleteForm) {
-                currentDeleteForm.submit();
-            }
-            deleteModal.classList.add('hidden');
-        });
-
-        deleteModal.addEventListener('click', function(e) {
-            if (e.target === deleteModal) {
-                deleteModal.classList.add('hidden');
-                currentDeleteForm = null;
             }
         });
     });
