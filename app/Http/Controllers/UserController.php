@@ -17,12 +17,18 @@ class UserController extends Controller
         $today = now();
         $lastDayOfMonth = Carbon::today('UTC')->endOfMonth();
         $daysLeft = floor($today->diffInDays($lastDayOfMonth));
-        $categories = $user->expensesCategories->map(function ($category) {
+
+        $expensesCategories = $user->expensesCategories->filter(function ($category) {
+            return $category->total_expenses != null;
+        });
+
+        $categories = $expensesCategories->map(function ($category) {
             return $category->name;
-        })->toArray();
-        $categoryExpense = $user->expensesCategories->map(function ($category) {
+        })->values();
+
+        $categoryExpense = $expensesCategories->map(function ($category) {
             return $category->total_expenses;
-        })->toArray();
+        })->values();
 
         $expenses = $user->expenses;
         $recExpenses = $user->recExpenses;

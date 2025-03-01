@@ -70,11 +70,13 @@ class User extends Authenticatable
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
 
-        return $this->expenses->filter(function ($expense) use ($currentMonth, $currentYear) {
+        $total = $this->expenses->filter(function ($expense) use ($currentMonth, $currentYear) {
             return !$expense->monthly ||
                 ($expense->created_at->year == $currentYear && $expense->created_at->month == $currentMonth);
         })->sum('cost');
+        return $total;
     }
+
 
     public function expensesCategories()
     {

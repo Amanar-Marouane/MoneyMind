@@ -285,24 +285,27 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Function to generate random colors
         function generateRandomColors(count) {
             let colors = [];
             for (let i = 0; i < count; i++) {
-                let color = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                let color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
                 colors.push(color);
             }
             return colors;
         }
 
         var ctx = document.getElementById('expensesPieChart').getContext('2d');
+
         var myPieChart = new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: @json($categories),
                 datasets: [{
-                    label: "Expenses's Categories",
+                    label: "Expenses Categories",
                     data: @json($categoryExpense),
-                    backgroundColor: generateRandomColors(@json($categories).length),
+                    backgroundColor: generateRandomColors(@json($categories)
+                        .length),
                     borderColor: "#000",
                     borderWidth: 1
                 }]
@@ -316,7 +319,7 @@
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw + 'DH';
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' DH';
                             }
                         }
                     }
