@@ -51,10 +51,12 @@
                     <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-4">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="text-md font-medium">Wishlist Progress</h4>
-                            <button
-                                class="px-4 py-1.5 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 dark:bg-blue-700 dark:hover:bg-blue-600">
-                                Check Your Wishlist Progress
-                            </button>
+                            <a href="{{ route('wish-list') }}">
+                                <button
+                                    class="px-4 py-1.5 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 dark:bg-blue-700 dark:hover:bg-blue-600">
+                                    Check Your Wishlist Progress
+                                </button>
+                            </a>
                         </div>
 
                         <div
@@ -169,7 +171,7 @@
                                                     class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                                     <span
                                                         class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                        {{ $expense->category->name }}
+                                                        {{ $expense->category->name ?? 'From The Wish List' }}
                                                     </span>
                                                 </td>
                                                 <td

@@ -19,7 +19,7 @@ return new class extends Migration
                 ->references("id")
                 ->on("users")
                 ->onDelete('cascade');
-            $table->unsignedBigInteger("category_id");
+            $table->unsignedBigInteger("category_id")->default(null);
             $table->foreign("category_id")
                 ->references("id")
                 ->on("categories")

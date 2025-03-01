@@ -22,6 +22,7 @@ class SetSavingGoalProgress extends Command
 
                 if ($user->credit_date == $currentDay || ($currentDay == 28 && $currentMonth == 2)) {
                     $user->saving_goal_progress = $user->budget;
+                    $user->budget = 0;
                     $user->save();
 
                     $this->info("Saving Goal of {$user->budget}dh has been added to your saving goal progress for user ID: {$user->id}.");

@@ -17,6 +17,7 @@ Route::middleware(Client::class)->group(function () {
     Route::post('/wish', [WishController::class, 'store'])->name('wish.store');
     Route::delete('/wish', [WishController::class, 'destroy'])->name('wish.destroy');
     Route::put('/wish', [WishController::class, 'update'])->name('wish.update');
+    Route::post('/wish/buy', [WishController::class, 'buy'])->name('wish.buy');
 });
 
 Route::middleware(Admin::class)->group(function () {

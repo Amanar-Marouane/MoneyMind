@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Wish;
+use App\Models\{User, Wish, Expense};
 use Illuminate\Support\Facades\Auth;
 
 class WishController extends Controller
@@ -53,5 +52,26 @@ class WishController extends Controller
             return redirect()->back()->with('success', 'Wish Has Been Updated');
         }
         return redirect()->back()->with('error', 'Something Went Wrong');
+    }
+
+    public function buy(Request $request)
+    {
+        $user = User::find(Auth::id());
+        if ($user->saving_goal_progress < $request->cost) {
+            return redirect()->back()->with('error', 'You Don\'t Have Enough Saving Money, Try Deposing Some Money To Your Saving Pocket');
+        }
+        $wish = Wish::find($request->id);
+        if (!$wish) {
+            return redirect()->back()->with('error', 'Something Went Wrong');
+        }
+        Expense::create([
+            'name' => $request->name,
+            'cost' => $request->cost,
+            'user_id' => Auth::id(),
+        ]);
+        $user->saving_goal_progress -= $request->cost;
+        $user->save();
+        $wish->delete();
+        return redirect()->back()->with('success', 'Congrats!! Your Wish Become True');
     }
 }
