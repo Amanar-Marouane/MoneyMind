@@ -44,8 +44,16 @@ class ExpenseController extends Controller
                 $user->save();
             }
         }
+        if (AlertController::budgetChecker($user)) {
+            $totalExpenses = $user->total_expenses();
+            $totalBudget = $user->budget + $totalExpenses;
+            $percentageSpent = ($totalExpenses / $totalBudget) * 100;
+            $alertMessage = "You've spent " . number_format($percentageSpent, 2) . "% of your budget. Please make sure your budget management is on track. We suggest using our AI for better management.";
+        }
 
-        return redirect(route("dashboard"))->with("success", "Expense counted successfully");
+        return redirect(route("dashboard"))
+            ->with("success", "Expense counted successfully")
+            ->with("alertMessage", $alertMessage ?? false);
     }
 
     public function destroy(Request $request)

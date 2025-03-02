@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use App\Mail\AlertMail;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\AlertController;
 
 class CheckRecExpenses extends Command
 {
@@ -26,11 +29,24 @@ class CheckRecExpenses extends Command
                     if ($user->budget >= $expense->cost) {
                         $user->budget -= $expense->cost;
                         $user->save();
-                        $this->info("User $user->id Paid $expense->name");
+
+                        $alertMessage = "✅ Payment Successful: We have automatically paid **{$expense->name}** for you this month. The amount of **{$expense->cost} DH** has been deducted from your budget. 💰";
+                        $this->info("User {$user->id} paid for {$expense->name}");
                     } else {
-                        \Log::warning("User $user->id does not have enough budget for $expense->name");
+                        \Log::warning("User {$user->id} does not have enough budget for {$expense->name}");
+
+                        $alertMessage = "⚠️ Insufficient Funds: Your scheduled payment for **{$expense->name}** (**{$expense->cost} DH**) could not be processed due to insufficient funds in your budget. Please make the payment manually to avoid any service disruption. 🚨";
                     }
+
+                    Mail::to($user->email)->send(new AlertMail($alertMessage));
                 }
+            }
+            if (AlertController::budgetChecker($user)) {
+                $totalExpenses = $user->total_expenses();
+                $totalBudget = $user->budget + $totalExpenses;
+                $percentageSpent = ($totalExpenses / $totalBudget) * 100;
+                $alertMessage = "You've spent " . number_format($percentageSpent, 2) . "% of your budget. Please make sure your budget management is on track. We suggest using our AI for better management.";
+                Mail::to($user->email)->send(new AlertMail($alertMessage));
             }
         }
     }

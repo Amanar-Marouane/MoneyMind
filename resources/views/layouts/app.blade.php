@@ -74,6 +74,20 @@
             <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">{{ session('error') ?? '' }}
             </p>
         </div>
+        <div class="mb-4 text-yellow-800 bg-yellow-100 rounded-lg border-l-4 border-yellow-500 shadow-md p-4"
+            x-data="{ show: {{ session('alertMessage') ? 'true' : 'false' }} }" x-show="show" x-transition>
+            <div class="flex justify-between items-center">
+                <p>{{ session('alertMessage') }}</p>
+                <button @click="show = false" class="text-yellow-700 hover:text-yellow-900 focus:outline-none"
+                    aria-label="Close">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
         <!-- Page Content -->
         <main>
             {{ $slot }}
