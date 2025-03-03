@@ -67,11 +67,11 @@
         @endisset
 
         <div class="mb-4 text-white rounded-lg bg-green-500 border-l-4 border-green-700 shadow-md">
-            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">
+            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 4000)">
                 {{ session('success') ?? '' }}</p>
         </div>
         <div class="mb-4 text-white rounded-lg bg-red-500 border-l-4 border-red-700 shadow-md">
-            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">{{ session('error') ?? '' }}
+            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 4000)">{{ session('error') ?? '' }}
             </p>
         </div>
         <div class="mb-4 text-yellow-800 bg-yellow-100 rounded-lg border-l-4 border-yellow-500 shadow-md p-4"

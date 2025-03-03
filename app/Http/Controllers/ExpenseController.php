@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Category, User, Expense};
+use App\Models\{Category, User, Expense, Alert};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -32,6 +32,8 @@ class ExpenseController extends Controller
         Expense::create($validateData);
 
         $user = User::find(Auth::id());
+        if ($user->budget < $request->cost) return redirect()->back()->with('error', 'There\'s No Enough Budget, Add Some Money To Your Budget First');
+
         if ($request->monthly == "false") {
             $user->budget -= (int) $request->cost;
             $user->save();
@@ -44,11 +46,28 @@ class ExpenseController extends Controller
                 $user->save();
             }
         }
+
+        $totalExpenses = $user->total_expenses();
+        $totalBudget = $user->budget + $totalExpenses;
         if (AlertController::budgetChecker($user)) {
-            $totalExpenses = $user->total_expenses();
-            $totalBudget = $user->budget + $totalExpenses;
             $percentageSpent = ($totalExpenses / $totalBudget) * 100;
             $alertMessage = "You've spent " . number_format($percentageSpent, 2) . "% of your budget. Please make sure your budget management is on track. We suggest using our AI for better management.";
+        }
+
+        $category = Category::find($validateData['category_id']);
+        $alert = Alert::where('user_id', Auth::id())
+            ->where('category_id', $category->id)
+            ->first();
+
+        if ($alert) {
+            $total_category_spent = (int) $user->category_expenses_sum($category->id);
+            $alert_value = $alert->type == 'cash' ? $alert->value : ($alert->value * $totalBudget) / 100;
+            if ($total_category_spent >= $alert_value) {
+                return redirect(route("dashboard"))
+                    ->with("success", "Expense counted successfully")
+                    ->with("error", "You've exceeded the limit you set for the $category->name category, which is $alert_value Dh, by a total of $total_category_spent Dh.")
+                    ->with("alertMessage", $alertMessage ?? false);
+            }
         }
 
         return redirect(route("dashboard"))

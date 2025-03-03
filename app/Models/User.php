@@ -86,6 +86,18 @@ class User extends Authenticatable
             ->groupBy('expenses.category_id');
     }
 
+    public function category_expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function category_expenses_sum($categoryId)
+    {
+        return $this->category_expenses($categoryId)
+            ->where('expenses.category_id', $categoryId)
+            ->sum('cost');
+    }
+
     public function wishes()
     {
         return $this->hasMany(Wish::class);
@@ -96,7 +108,8 @@ class User extends Authenticatable
         return $this->role == $role;
     }
 
-    public function alerts(){
+    public function alerts()
+    {
         return $this->hasMany(Alert::class);
     }
 }
