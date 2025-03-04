@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\{User, Category, Alert};
+use App\Models\{User, Category, Alert, History};
 use Illuminate\Support\Carbon;
 use App\Mail\AlertMail;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +31,12 @@ class CheckRecExpenses extends Command
                     if ($user->budget >= $expense->cost) {
                         $user->budget -= $expense->cost;
                         $user->save();
+
+                        History::create([
+                            'name' => $expense->name,
+                            'value' => $expense->cost,
+                            'category_id' => $expense->cetegory_id,
+                        ]);
 
                         $alertMessage = "✅ Payment Successful: We have automatically paid **{$expense->name}** for you this month. The amount of **{$expense->cost} DH** has been deducted from your budget. 💰";
                         $this->info("User {$user->id} paid for {$expense->name}");
