@@ -12,15 +12,6 @@
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div
                             class="p-6 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 rounded-lg mb-6">
-                            <div
-                                class="mb-8 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
-                                <h3 class="text-md font-medium text-blue-800 dark:text-blue-300 mb-2">Savings Tips</h3>
-                                <p class="text-sm text-blue-600 dark:text-blue-400">
-                                    Based on your spending habits, you could reach your "New Laptop" goal 1.5 months
-                                    faster
-                                    by transferring 10% of your entertainment budget to your savings.
-                                </p>
-                            </div>
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-lg font-medium">Savings Goals</h3>
                                 <a href="{{ route('profile.edit') }}">

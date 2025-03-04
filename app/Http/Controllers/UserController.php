@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Expense;
+use App\Models\History;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Wish;
 use Illuminate\Support\Facades\{Auth, DB};
 use Illuminate\Support\Carbon;
+use App\Services\GeminiService;
 
 class UserController extends Controller
 {
@@ -32,6 +35,12 @@ class UserController extends Controller
 
         $expenses = $user->expenses;
         $recExpenses = $user->recExpenses;
+        $wishes = Wish::all();
+        $tip = (new GeminiService)->generateTips([
+            'expenses' => $expenses,
+            'recurringExpenses' => $recExpenses,
+            'wishes' => $wishes,
+        ]);
 
         return view("client.index", [
             'user' => $user,
@@ -40,6 +49,7 @@ class UserController extends Controller
             'categoryExpense' => $categoryExpense,
             'expenses' => $expenses,
             'recExpenses' => $recExpenses,
+            'tip' => $tip,
         ]);
     }
 

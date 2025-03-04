@@ -15,7 +15,7 @@
                     </button>
                 </a>
 
-                <a href="{{ rpute('deposits.index') }}">
+                <a href="{{ route('deposits.index') }}">
                     <button
                         class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 dark:bg-blue-700 dark:hover:bg-blue-600">
                         + Add Money
@@ -108,9 +108,7 @@
                         <div
                             class="text-sm text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-gray-700 p-3 rounded-md border-l-4 border-blue-500">
                             <p class="font-medium text-blue-800 dark:text-blue-300 mb-1">Smart Saving Tip:</p>
-                            Based on your current saving patterns, you could reach your "New Laptop" goal 2 months
-                            earlier by reducing your dining expenses by just 10%. Would you like to set up a
-                            notification for when your dining expenses exceed your monthly limit?
+                            {{ $tip }}
                         </div>
                     </div>
                 </div>

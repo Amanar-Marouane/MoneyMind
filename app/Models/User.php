@@ -53,14 +53,17 @@ class User extends Authenticatable
     public function expenses()
     {
         return $this->hasMany(Expense::class)
-            ->where("monthly", false);
+            ->where("monthly", false)
+            ->with('category');
     }
 
     public function recExpenses()
     {
         return $this->hasMany(Expense::class)
-            ->where("monthly", true);
+            ->where("monthly", true)
+            ->with('category');
     }
+
 
     public function total_expenses()
     {
