@@ -15,7 +15,7 @@
                     </button>
                 </a>
 
-                <a href="">
+                <a href="{{ rpute('deposits.index') }}">
                     <button
                         class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 dark:bg-blue-700 dark:hover:bg-blue-600">
                         + Add Money

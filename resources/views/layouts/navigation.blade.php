@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('wish-list')" :active="request()->routeIs('wish-list')">
                             {{ __('Wish List') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('deposits.index')" :active="request()->routeIs('deposits.index')">
+                            {{ __('Deposits') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('alerts.index')" :active="request()->routeIs('alerts.index')">
                             {{ __('Alerts Config') }}
                         </x-nav-link>

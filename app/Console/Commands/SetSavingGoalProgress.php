@@ -28,8 +28,8 @@ class SetSavingGoalProgress extends Command
                     $user->budget = 0;
                     $user->save();
 
-                    $message = "💰 Your saving goal has been updated! We have transferred **$savedAmount DH** from your budget to your savings.";
-                    Mail::to($user->email)->send(new AlertMail($message));
+                    $alertMessage = "💰 Your saving goal has been updated! We have transferred **$savedAmount DH** from your budget to your savings.";
+                    Mail::to($user->email)->queue(new AlertMail($alertMessage));
 
                     $this->info("Saving Goal of {$savedAmount} DH has been added for user ID: {$user->id}.");
                 }

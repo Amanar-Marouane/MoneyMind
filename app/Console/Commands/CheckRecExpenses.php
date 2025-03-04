@@ -40,7 +40,7 @@ class CheckRecExpenses extends Command
                         $alertMessage = "⚠️ Insufficient Funds: Your scheduled payment for **{$expense->name}** (**{$expense->cost} DH**) could not be processed due to insufficient funds in your budget. Please make the payment manually to avoid any service disruption. 🚨";
                     }
 
-                    Mail::to($user->email)->send(new AlertMail($alertMessage));
+                    Mail::to($user->email)->queue(new AlertMail($alertMessage));
                 }
 
                 $category = Category::find($expense->category_id);
@@ -53,14 +53,14 @@ class CheckRecExpenses extends Command
                     $alert_value = $alert->type == 'cash' ? $alert->value : ($alert->value * $totalBudget) / 100;
                     if ($total_category_spent >= $alert_value) {
                         $alertMessage = "⚠️ You've exceeded the limit you set for the $category->name category, which is $alert_value Dh, by a total of $total_category_spent Dh. 🚨";
-                        Mail::to($user->email)->send(new AlertMail($alertMessage));
+                        Mail::to($user->email)->queue(new AlertMail($alertMessage));
                     }
                 }
             }
             if (AlertController::budgetChecker($user)) {
-                $percentageSpent = ($totalExpenses / $totalBudget) * 100;
+                $percentageSpent = $totalBudget > 0 ? ($totalExpenses / $totalBudget) * 100 : 100;
                 $alertMessage = "You've spent " . number_format($percentageSpent, 2) . "% of your budget. Please make sure your budget management is on track. We suggest using our AI for better management.";
-                Mail::to($user->email)->send(new AlertMail($alertMessage));
+                Mail::to($user->email)->queue(new AlertMail($alertMessage));
             }
         }
     }

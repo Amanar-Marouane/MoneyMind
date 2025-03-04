@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AlertController, ProfileController, UserController, ExpenseController, WishController, CategoryController};
+use App\Http\Controllers\{AlertController, ProfileController, UserController, ExpenseController, WishController, CategoryController, DepositController};
 use App\Http\Middleware\{Admin, Client};
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +26,9 @@ Route::middleware(Client::class)->group(function () {
     Route::post('/alerts', [AlertController::class, 'store'])->name('alerts.store');
     Route::put('/alerts', [AlertController::class, 'update'])->name('alerts.update');
     Route::delete('/alerts', [AlertController::class, 'destroy'])->name('alerts.destroy');
+
+    Route::get('/deposits', [DepositController::class, 'index'])->name('deposits.index');
+    Route::post('/deposits', [DepositController::class, 'store'])->name('deposits.store');
 });
 
 Route::middleware(Admin::class)->group(function () {
