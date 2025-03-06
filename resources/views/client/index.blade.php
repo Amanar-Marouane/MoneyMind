@@ -312,8 +312,11 @@
                 document.querySelector('.canvas').style.display = 'none';
             }
         }
-
-        var ctx = document.getElementById('expensesPieChart').getContext('2d');
+        
+        var pieChart = document.getElementById('expensesPieChart');
+        if (pieChart) {
+            var ctx = pieChart.getContext('2d');
+        }
 
         var myPieChart = new Chart(ctx, {
             type: 'doughnut',
