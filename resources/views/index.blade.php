@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="h-screen bg-gradient-to-b from-indigo-900 to-blue-900 min-w-[100vw]">
+    <div class="h-screen bg-gradient-to-b from-indigo-900 to-blue-900 min-w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
             <div class="lg:flex lg:items-center lg:justify-between">
                 <div class="lg:w-1/2">

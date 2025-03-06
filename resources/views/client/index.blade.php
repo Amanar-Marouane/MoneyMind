@@ -117,7 +117,7 @@
             </div>
 
             <div class="flex gap-6 mb-6">
-                @if ($categoryExpense)
+                @if ($categoryExpense->isEmpty())
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-[50%]">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <h3 class="text-lg font-medium mb-4">Expenses by Category</h3>
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                 @else
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg col-span-2">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg col-span-2 w-full">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex flex-col items-center justify-center py-12 w-full"
                                 id="noExpensesContainer">
@@ -223,75 +223,73 @@
                 @endif
             </div>
 
-            @if ($categoryExpense)
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-medium">Recurring Expenses</h3>
-                            <a href="{{ route('expense.add') }}">
-                                <button
-                                    class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 dark:bg-blue-700 dark:hover:bg-blue-600">
-                                    Add Recurring
-                                </button>
-                            </a>
-                        </div>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium">Recurring Expenses</h3>
+                        <a href="{{ route('expense.add') }}">
+                            <button
+                                class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 dark:bg-blue-700 dark:hover:bg-blue-600">
+                                Add Recurring
+                            </button>
+                        </a>
+                    </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            @forelse ($recExpenses as $expense)
-                                <div
-                                    class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow duration-200">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <h4 class="text-md font-medium">{{ $expense->name }}</h4>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                                <span class="inline-flex items-center">
-                                                    <span class="mr-2">{{ $expense->cost }} DH</span>
-                                                    <span
-                                                        class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-800">Monthly</span>
-                                                </span>
-                                            </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                                Next payment:
-                                                {{ Carbon::parse($expense->starting_date)->greaterThan(now())
-                                                    ? Carbon::parse($expense->starting_date)->format('M d, Y')
-                                                    : Carbon::parse($expense->starting_date)->addMonth()->format('M d, Y') }}
-                                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @forelse ($recExpenses as $expense)
+                            <div
+                                class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow duration-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-md font-medium">{{ $expense->name }}</h4>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                            <span class="inline-flex items-center">
+                                                <span class="mr-2">{{ $expense->cost }} DH</span>
+                                                <span
+                                                    class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-800">Monthly</span>
+                                            </span>
                                         </div>
-                                        <div class="flex space-x-2">
-                                            <button
-                                                class="p-1 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path
-                                                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                                </svg>
-                                            </button>
-                                            <form action="{{ route('expense.delete') }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="hidden" name="id" value="{{ $expense->id }}">
-                                                <button
-                                                    class="p-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                        viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fill-rule="evenodd"
-                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
-                                            </form>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                            Next payment:
+                                            {{ Carbon::parse($expense->starting_date)->greaterThan(now())
+                                                ? Carbon::parse($expense->starting_date)->format('M d, Y')
+                                                : Carbon::parse($expense->starting_date)->addMonth()->format('M d, Y') }}
                                         </div>
                                     </div>
+                                    <div class="flex space-x-2">
+                                        <button
+                                            class="p-1 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path
+                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                            </svg>
+                                        </button>
+                                        <form action="{{ route('expense.delete') }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="id" value="{{ $expense->id }}">
+                                            <button
+                                                class="p-1 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            @empty
-                                <div class="col-span-3 p-6 text-center text-gray-500 dark:text-gray-400">
-                                    <p>No recurring expenses yet. Add your first recurring expense to get started.</p>
-                                </div>
-                            @endforelse
-                        </div>
+                            </div>
+                        @empty
+                            <div class="col-span-3 p-6 text-center text-gray-500 dark:text-gray-400">
+                                <p>No recurring expenses yet. Add your first recurring expense to get started.</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 </x-app-layout>
@@ -307,7 +305,9 @@
             }
             return colors;
         }
-
+        if (count(@json($categories)) != 0) {
+            document.querySelector('canvasEmpty').style.display = 'none';
+        }
         var ctx = document.getElementById('expensesPieChart').getContext('2d');
 
         var myPieChart = new Chart(ctx, {

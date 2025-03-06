@@ -47,6 +47,6 @@ Route::middleware(Admin::class)->group(function () {
     Route::delete('/admin/categories', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
 
-Route::view('/home', 'index')->name('home');
+Route::view('/', 'index')->name('home');
 
 require __DIR__ . '/auth.php';
