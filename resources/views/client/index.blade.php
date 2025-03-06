@@ -117,8 +117,8 @@
             </div>
 
             <div class="flex gap-6 mb-6">
-                @if ($categoryExpense->isEmpty())
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-[50%]">
+                @unless ($categoryExpense->isEmpty())
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-[50%] canvas">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <h3 class="text-lg font-medium mb-4">Expenses by Category</h3>
                             <div class="relative flex justify-center" style="height: 300px; width: fit;">
@@ -197,8 +197,7 @@
                 @else
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg col-span-2 w-full">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="flex flex-col items-center justify-center py-12 w-full"
-                                id="noExpensesContainer">
+                            <div class="flex flex-col items-center justify-center py-12 w-full" id="noExpensesContainer">
                                 <div class="bg-gray-100 dark:bg-gray-700 rounded-full p-6 mb-4">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="h-12 w-12 text-gray-400 dark:text-gray-300" fill="none"
@@ -220,7 +219,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                @endunless
             </div>
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -305,19 +304,22 @@
             }
             return colors;
         }
-        if (count(@json($categories)) != 0) {
-            document.querySelector('canvasEmpty').style.display = 'none';
+        let categories = @json($categories);
+
+        if (categories.length === 0) {
+            document.querySelector('.canvas').style.display = 'none';
         }
+
         var ctx = document.getElementById('expensesPieChart').getContext('2d');
 
         var myPieChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: @json($categories),
+                labels: categories,
                 datasets: [{
                     label: "Expenses Categories",
                     data: @json($categoryExpense),
-                    backgroundColor: generateRandomColors(@json($categories)
+                    backgroundColor: generateRandomColors(categories
                         .length),
                     borderColor: "#000",
                     borderWidth: 1
