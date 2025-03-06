@@ -82,8 +82,8 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Category::class, Expense::class, 'user_id', 'id', 'id', 'category_id')
             ->withSum(['expenses as total_expenses' => function ($query) {
-                $query->whereMonth('created_at', now()->month)
-                    ->whereYear('created_at', now()->year);
+                $query->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year);
             }], 'cost')
             ->where('expenses.user_id', $this->id)
             ->groupBy('expenses.category_id');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Deposit;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DepositController extends Controller
 {
@@ -21,6 +23,9 @@ class DepositController extends Controller
             'value' => 'required|integer|min:0',
         ]);
         Deposit::create($validateData);
+        $user = User::find(Auth::id());
+        $user->budget += $validateData['value'];
+        $user->save();
         return redirect()->back()->with('success', 'Deposit Has Been Done Successfuly');
     }
 }

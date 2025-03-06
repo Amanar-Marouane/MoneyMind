@@ -95,7 +95,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function adminUsersDestroy(Request $request)
+    public function destroy(Request $request)
     {
         $account = User::find($request->id);
         if (!$account) {
