@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AlertController, ProfileController, UserController, ExpenseController, WishController, CategoryController, DepositController, HistoryController};
+use App\Http\Controllers\{AlertController, ProfileController, UserController, ExpenseController, WishController, CategoryController, DepositController, HistoryController, tipController};
 use App\Http\Middleware\{Admin, Client};
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +31,8 @@ Route::middleware(Client::class)->group(function () {
     Route::post('/deposits', [DepositController::class, 'store'])->name('deposits.store');
 
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+
+    Route::get('/tip', [tipController::class, 'get'])->name('tip');
 });
 
 Route::middleware(Admin::class)->group(function () {

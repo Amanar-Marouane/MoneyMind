@@ -107,8 +107,10 @@
 
                         <div
                             class="text-sm text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-gray-700 p-3 rounded-md border-l-4 border-blue-500">
-                            <p class="font-medium text-blue-800 dark:text-blue-300 mb-1">Smart Saving Tip:</p>
-                            {{ $tip }}
+                            <p class="font-medium text-blue-800 dark:text-blue-300 mb-1">Smart Saving Tip: <br></p>
+                            <p class="font-medium text-gray-800 dark:text-gray-300 mb-1 tip">
+                                A saving tip under generation based on your informations, please wait...
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -337,5 +339,18 @@
                 }
             }
         });
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", '/tip', true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                document.querySelector('.tip').innerText = '';
+                document.querySelector('.tip').innerText = data;
+            }
+        };
+        xhr.send();
+
     });
 </script>

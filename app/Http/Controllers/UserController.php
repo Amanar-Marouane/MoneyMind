@@ -35,12 +35,6 @@ class UserController extends Controller
 
         $expenses = $user->expenses;
         $recExpenses = $user->recExpenses;
-        $wishes = Wish::all();
-        $tip = (new GeminiService)->generateTips([
-            'expenses' => $expenses,
-            'recurringExpenses' => $recExpenses,
-            'wishes' => $wishes,
-        ]);
 
         return view("client.index", [
             'user' => $user,
@@ -49,7 +43,6 @@ class UserController extends Controller
             'categoryExpense' => $categoryExpense,
             'expenses' => $expenses,
             'recExpenses' => $recExpenses,
-            'tip' => $tip,
         ]);
     }
 
