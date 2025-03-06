@@ -26,6 +26,6 @@ class Client
             return redirect('/admin/dashboard');
         }
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

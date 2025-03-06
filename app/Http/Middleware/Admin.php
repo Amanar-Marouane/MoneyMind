@@ -25,6 +25,6 @@ class Admin
             return redirect('/dashboard');
         }
 
-        return redirect('/login');
+        return redirect('/');
     }
 }
