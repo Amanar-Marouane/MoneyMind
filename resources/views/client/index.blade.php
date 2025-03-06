@@ -312,41 +312,41 @@
                 document.querySelector('.canvas').style.display = 'none';
             }
         }
-        
+
         var pieChart = document.getElementById('expensesPieChart');
         if (pieChart) {
             var ctx = pieChart.getContext('2d');
-        }
 
-        var myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: categories,
-                datasets: [{
-                    label: "Expenses Categories",
-                    data: @json($categoryExpense),
-                    backgroundColor: generateRandomColors(categories
-                        .length),
-                    borderColor: "#000",
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw + ' DH';
+            var myPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: "Expenses Categories",
+                        data: @json($categoryExpense),
+                        backgroundColor: generateRandomColors(categories
+                            .length),
+                        borderColor: "#000",
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw + ' DH';
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
 
         var xhr = new XMLHttpRequest();
         xhr.open("GET", '/tip', true);
