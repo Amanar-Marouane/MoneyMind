@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AlertMail;
+use Illuminate\Support\Facades\Log;
 
 class SetSavingGoalProgress extends Command
 {
@@ -15,7 +16,7 @@ class SetSavingGoalProgress extends Command
 
     public function handle()
     {
-        \Log::info('Cron job executed at ' . now());
+        Log::info('Cron job executed at ' . now());
 
         foreach (User::where('role', 'Client')->get() as $user) {
             $currentDay = Carbon::now()->day;

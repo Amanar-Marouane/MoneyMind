@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Mail\AlertMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\AlertController;
+use Illuminate\Support\Facades\Log;
 
 class CheckRecExpenses extends Command
 {
@@ -16,7 +17,7 @@ class CheckRecExpenses extends Command
 
     public function handle()
     {
-        \Log::info('Cron job executed at ' . now());
+        Log::info('Cron job executed at ' . now());
 
         $currentDay = Carbon::now()->day;
         $users = User::where('role', 'Client')->with('recExpenses')->get();
@@ -41,7 +42,7 @@ class CheckRecExpenses extends Command
                         $alertMessage = "✅ Payment Successful: We have automatically paid **{$expense->name}** for you this month. The amount of **{$expense->cost} DH** has been deducted from your budget. 💰";
                         $this->info("User {$user->id} paid for {$expense->name}");
                     } else {
-                        \Log::warning("User {$user->id} does not have enough budget for {$expense->name}");
+                        Log::warning("User {$user->id} does not have enough budget for {$expense->name}");
 
                         $alertMessage = "⚠️ Insufficient Funds: Your scheduled payment for **{$expense->name}** (**{$expense->cost} DH**) could not be processed due to insufficient funds in your budget. Please make the payment manually to avoid any service disruption. 🚨";
                     }

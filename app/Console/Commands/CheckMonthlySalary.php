@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use App\Mail\AlertMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class CheckMonthlySalary extends Command
 {
@@ -15,7 +16,7 @@ class CheckMonthlySalary extends Command
 
     public function handle()
     {
-        \Log::info('Cron job executed at ' . now());
+        Log::info('Cron job executed at ' . now());
 
         foreach (User::all() as $user) {
             if ($user->role == "Client") {
