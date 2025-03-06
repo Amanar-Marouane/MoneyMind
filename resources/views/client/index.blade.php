@@ -307,7 +307,10 @@
         let categories = @json($categories);
 
         if (categories.length === 0) {
-            document.querySelector('.canvas').style.display = 'none';
+            let canvas = document.querySelector('.canvas');
+            if (canvas) {
+                document.querySelector('.canvas').style.display = 'none';
+            }
         }
 
         var ctx = document.getElementById('expensesPieChart').getContext('2d');
