@@ -15,14 +15,14 @@
                         <label for="name"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Name') }}</label>
                         <input type="text" name="name" id="name"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 text-gray-700"
                             required>
                     </div>
                     <div class="mb-4">
                         <label for="value"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Value') }}</label>
                         <input type="number" name="value" id="value"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 text-gray-700"
                             required>
                     </div>
                     <div class="flex justify-end">
