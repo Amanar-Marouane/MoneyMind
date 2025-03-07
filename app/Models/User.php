@@ -64,6 +64,11 @@ class User extends Authenticatable
             ->with('category');
     }
 
+    public function history()
+    {
+        return $this->hasMany(History::class);
+    }
+
 
     public function total_expenses()
     {

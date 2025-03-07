@@ -13,14 +13,16 @@
     </x-slot>
 
     <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6 flex justify-center">
-            <div class="p-6">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Expense Trends') }}</h3>
-                <div class="h-64">
-                    <canvas id="expensesChart" class="w-full h-full"></canvas>
+        @unless ($histories->isEmpty())
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6 flex justify-center">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">{{ __('Expense Trends') }}</h3>
+                    <div class="h-64">
+                        <canvas id="expensesChart" class="w-full h-full"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endunless
 
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6">
