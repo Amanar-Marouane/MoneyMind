@@ -11,9 +11,9 @@ class DepositController extends Controller
 {
     public function index()
     {
-        $deposits = Deposit::all();
+        $user = User::find(Auth::id());
         return view('deposits.index', [
-            'deposits' => $deposits,
+            'user' => $user,
         ]);
     }
     public function store(Request $request)
@@ -22,6 +22,7 @@ class DepositController extends Controller
             'name' => 'required|string',
             'value' => 'required|integer|min:0',
         ]);
+        $validateData['user_id'] = Auth::id();
         Deposit::create($validateData);
         $user = User::find(Auth::id());
         $user->budget += $validateData['value'];

@@ -13,7 +13,7 @@ class tipController
         $user = User::find(Auth::id());
         $expenses = $user->expenses;
         $recExpenses = $user->recExpenses;
-        $wishes = Wish::all();
+        $wishes = $user->wishes;
         $tip = (new GeminiService)->generateTips([
             'expenses' => $expenses,
             'recurringExpenses' => $recExpenses,

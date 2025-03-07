@@ -34,16 +34,16 @@
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('Deposit History') }}</h3>
-                @if ($deposits->isEmpty())
+                @if ($user->deposits->isEmpty())
                     <p class="text-gray-600 dark:text-gray-400">{{ __('No deposits found.') }}</p>
                 @else
                     <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach ($deposits as $deposit)
+                        @foreach ($user->deposits as $deposit)
                             <li class="py-4">
                                 <div class="flex justify-between">
-                                    <span class="text-gray-800 dark:text-gray-200">{{ $deposit['name'] }}</span>
+                                    <span class="text-gray-800 dark:text-gray-200">{{ $deposit->name }}</span>
                                     <span
-                                        class="text-gray-600 dark:text-gray-400">{{ number_format($deposit['value'], 2) }}
+                                        class="text-gray-600 dark:text-gray-400">{{ number_format($deposit->value, 2) }}
                                         DH</span>
                                 </div>
                             </li>

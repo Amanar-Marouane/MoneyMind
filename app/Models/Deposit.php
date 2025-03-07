@@ -9,5 +9,5 @@ class Deposit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'value', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'name', 'value', 'created_at', 'updated_at'];
 }
