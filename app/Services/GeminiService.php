@@ -31,7 +31,7 @@ class GeminiService
                         [
                             'parts' => [
                                 [
-                                    'text' => "Based on this data: $inputDataString, generate helpful tips for saving money, better management, and more access to achieve the wishes in the wish list, Answer In 4-5 Lines and From Client Insight (Null Categories In Expenses Means That They Were Wishes That Has Been True), And Call The Category By It's Name"
+                                    'text' => "Based on this data: $inputDataString, generate helpful tips for saving money, better financial management, and improving access to achieve the wishes in the wish list. Answer in 4-5 lines, using insights from the client's data. (Note: Null categories in expenses indicate wishes that have been fulfilled.) Refer to each category by its name and provide general advice while being specific about the current month. If there is any event in the current month like Ramadan 2025 ect..., mention it in the tips."
                                 ]
                             ]
                         ]
